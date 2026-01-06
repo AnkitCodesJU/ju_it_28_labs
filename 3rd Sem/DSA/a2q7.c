@@ -27,19 +27,20 @@ void enqueue(Queue *q, int data) {
         printf("Queue is full\n");
         return;
     }
-    if (q->front == -1) {  // Initialize queue when the first element is added
+    if (q->front == -1) {  /* Initialize queue when the first element is added */
         q->front = 0;
     }
     q->arr[++q->rear] = data;
 }
 
 int dequeue(Queue *q) {
+    int temp;
     if (isEmpty(q)) {
         printf("Queue is empty\n");
-        exit(1);  // Exit if the queue is empty
+        exit(1);  /* Exit if the queue is empty */
     }
-    int temp = q->arr[q->front];
-    if (q->front == q->rear) {  // Reset queue after dequeuing the last element
+    temp = q->arr[q->front];
+    if (q->front == q->rear) {  /* Reset queue after dequeuing the last element */
         q->front = q->rear = -1;
     } else {
         q->front++;
@@ -49,9 +50,9 @@ int dequeue(Queue *q) {
 
 int check(Queue *q) {
     if (isEmpty(q)) {
-        return 0;  // Queue is empty
+        return 0;  /* Queue is empty */
     } else {
-        return q->rear - q->front + 1;  // Calculate the number of elements in the queue
+        return q->rear - q->front + 1;  /* Calculate the number of elements in the queue */
     }
 }
 

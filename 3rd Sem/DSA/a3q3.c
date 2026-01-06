@@ -39,16 +39,17 @@ Node* deleteNode(Node* root, int key) {
     if (key < root->data) root->left = deleteNode(root->left, key);
     else if (key > root->data) root->right = deleteNode(root->right, key);
     else {
+        struct Node* temp;
         if (root->left == NULL) {
-            Node* temp = root->right;
+            temp = root->right;
             free(root);
             return temp;
         } else if (root->right == NULL) {
-            Node* temp = root->left;
+            temp = root->left;
             free(root);
             return temp;
         }
-        Node* temp = minValueNode(root->right);
+        temp = minValueNode(root->right);
         root->data = temp->data;
         root->right = deleteNode(root->right, temp->data);
     }
@@ -90,6 +91,9 @@ void findPreSuc(Node* root, Node** pre, Node** suc, int key) {
 int main() {
     Node* root = NULL;
     int ch, key;
+    int n, i;
+    Node *pre = NULL, *suc = NULL;
+
     printf("1. Build Tree:\n");
     printf("2. Search a node:\n");
     printf("3. Find predecessor and successor of a node:\n");
@@ -103,8 +107,7 @@ int main() {
         scanf("%d", &ch);
         if (ch == 1) {
             printf("Enter size of binary search tree:\n");
-            int n;
-            scanf("%d", &n);int i;
+            scanf("%d", &n);
             printf("Enter nodes of binary search tree:\n");
             for (i = 0; i < n; i++) {
                 scanf("%d", &key);
@@ -117,7 +120,7 @@ int main() {
         } else if (ch == 3) {
             printf("Enter the node:\n");
             scanf("%d", &key);
-            Node *pre = NULL, *suc = NULL;
+            pre = NULL; suc = NULL;
             findPreSuc(root, &pre, &suc, key);
             if (pre) printf("%d ", pre->data); else printf("-1 ");
             if (suc) printf("%d\n", suc->data); else printf("-1\n");

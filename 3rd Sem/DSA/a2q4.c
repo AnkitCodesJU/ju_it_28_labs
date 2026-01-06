@@ -21,11 +21,12 @@ void push(int data) {
 }
 
 void pop() {
+    struct Node *temp;
     if (top == NULL) {
         printf("Stack underflow! Cannot pop from an empty stack.\n");
         return;
     }
-    struct Node *temp = top;
+    temp = top;
     printf("Popped element is %d.\n", temp->data);
     top = top->next;
     free(temp);
@@ -40,11 +41,12 @@ void peek() {
 }
 
 void display() {
+    struct Node *temp;
     if (top == NULL) {
         printf("The stack is empty.\n");
         return;
     }
-    struct Node *temp = top;
+    temp = top;
     printf("Stack (top to bottom): TOP -> ");
     while (temp != NULL) {
         printf("%d -> ", temp->data);

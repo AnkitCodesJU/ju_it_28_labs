@@ -35,11 +35,12 @@ void enqueue(Queue *q, int data) {
 }
 
 int dequeue(Queue *q) {
+    int temp;
     if (isEmpty(q)) {
         printf("Queue is empty\n");
         exit(1);
     }
-    int temp = q->arr[q->front];
+    temp = q->arr[q->front];
     if (q->front == q->rear) {
         q->front = q->rear = -1; 
     } else {

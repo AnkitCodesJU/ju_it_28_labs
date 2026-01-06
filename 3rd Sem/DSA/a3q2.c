@@ -19,11 +19,13 @@ Node* newNode(int data) {
 }
 
 Node* buildTree(int in[], int pre[], int inStart, int inEnd, int* preIndex) {
+    Node* tNode;
+    int inIndex;
     if (inStart > inEnd) return NULL;
-    Node* tNode = newNode(pre[*preIndex]);
+    tNode = newNode(pre[*preIndex]);
     (*preIndex)++;
     if (inStart == inEnd) return tNode;
-    int inIndex = search(in, inStart, inEnd, tNode->data);
+    inIndex = search(in, inStart, inEnd, tNode->data);
     tNode->left = buildTree(in, pre, inStart, inIndex - 1, preIndex);
     tNode->right = buildTree(in, pre, inIndex + 1, inEnd, preIndex);
     return tNode;
@@ -74,10 +76,12 @@ void enQueue(struct Queue* q, struct Node* treeNode) {
 }
 
 struct Node* deQueue(struct Queue* q) {
+    struct QNode* temp;
+    struct Node* dequeuedNode;
     if (isEmpty(q))
         return NULL;
-    struct QNode* temp = q->front;
-    struct Node* dequeuedNode = temp->node;
+    temp = q->front;
+    dequeuedNode = temp->node;
     q->front = q->front->next;
     if (q->front == NULL)
         q->rear = NULL;
@@ -110,25 +114,35 @@ int getHeight(struct Node* root) {
 
 
 void printTreeDiagram(Node* root) {
+    struct Queue* currentLevel;
+    struct Queue* nextLevel;
+    int totalHeight;
+    int currentLevelNum;
+    int nodesInThisLevel;
+    int hasRealNode;
+    int i;
+    int initialIndent;
+    int spaceBetween;
+
     if (root == NULL) {
         printf("Tree is empty.\n");
         return;
     }
 
-    struct Queue* currentLevel = createQueue();
-    struct Queue* nextLevel = createQueue();
+    currentLevel = createQueue();
+    nextLevel = createQueue();
     enQueue(currentLevel, root);
 
-    int totalHeight = getHeight(root);
-    int currentLevelNum = 1;
-    int nodesInThisLevel = 1;
-    int hasRealNode = 1;
-    int i;
+    totalHeight = getHeight(root);
+    currentLevelNum = 1;
+    nodesInThisLevel = 1;
+    hasRealNode = 1;
+
     while (currentLevelNum <= totalHeight && hasRealNode) {
         hasRealNode = 0;
        
-        int initialIndent = (1 << (totalHeight - currentLevelNum)) - 1;
-        int spaceBetween = (1 << (totalHeight - currentLevelNum + 1)) - 1;
+        initialIndent = (1 << (totalHeight - currentLevelNum)) - 1;
+        spaceBetween = (1 << (totalHeight - currentLevelNum + 1)) - 1;
 
         printSpaces(initialIndent);
 
@@ -165,17 +179,33 @@ void printTreeDiagram(Node* root) {
 
 int main() {
     int n, i;
+    int *in;
+    int *pre;
+    int preIndex = 0;
+    Node* root;
+    
     printf("Input the size of tree:\n");
     scanf("%d", &n);
-    int in[n], pre[n];
+    
+    in = (int*)malloc(n * sizeof(int));
+    pre = (int*)malloc(n * sizeof(int));
+    
+    if (!in || !pre) {
+         printf("Memory error\n");
+         return 1;
+    }
+
     printf("Input the preorder traversal of tree:\n");
     for (i = 0; i < n; i++) scanf("%d", &pre[i]);
     printf("Input the inorder traversal of tree:\n");
     for (i = 0; i < n; i++) scanf("%d", &in[i]);
-    int preIndex = 0;
-    Node* root = buildTree(in, pre, 0, n - 1, &preIndex);
+    
+    root = buildTree(in, pre, 0, n - 1, &preIndex);
     printf("The given tree is:\n");
     printTreeDiagram(root);
     printf("\n");
+    
+    free(in);
+    free(pre);
     return 0;
 }

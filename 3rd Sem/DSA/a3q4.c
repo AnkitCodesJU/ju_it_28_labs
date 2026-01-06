@@ -82,7 +82,7 @@ void merge(int arr[], int l, int m, int r, int *pass, int n) {
     int n1 = m - l + 1;
     int n2 = r - m;
     int i, j, k;
-    int L[100], R[100];  // Using fixed size arrays for compatibility
+    int L[100], R[100];  /* Using fixed size arrays for compatibility */
     for (i = 0; i < n1; i++) L[i] = arr[l + i];
     for (j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
     i = 0; j = 0; k = l;
@@ -134,9 +134,9 @@ void heapSort(int arr[], int n) {
 
 int main() {
     int n, i;
+    int arr[100], copy[100];
     printf("Enter number of elements: ");
     scanf("%d", &n);
-    int arr[100], copy[100];
 
     printf("Enter elements: ");
     for (i = 0; i < n; i++) scanf("%d", &arr[i]);

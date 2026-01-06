@@ -30,17 +30,21 @@ struct Node* createCircle(int n) {
 }
 
 void solveJosephus(int n, int k) {
-    struct Node *current = createCircle(n);
+    struct Node *current;
+    struct Node *temp;
+    struct Node *to_free;
+    struct Node *nodeToDelete;
+    int i;
+
+    current = createCircle(n);
     if (current == NULL)
         return;
 
-    int i;
-
     if (k == 1) {
         printf("With k=1, the last person (player %d) will be the survivor.\n", n);
-        struct Node* temp = current;
+        temp = current;
         for (i = 0; i < n; i++) {
-            struct Node* to_free = temp;
+            to_free = temp;
             temp = temp->next;
             if (i < n-1) {
                  printf("Player %d has been eliminated.\n", to_free->player_id);
@@ -57,7 +61,7 @@ void solveJosephus(int n, int k) {
         for (i = 1; i < k - 1; i++) {
             current = current->next;
         }
-        struct Node *nodeToDelete = current->next;
+        nodeToDelete = current->next;
         current->next = nodeToDelete->next;
         printf("Player %d has been eliminated.\n", nodeToDelete->player_id);
         free(nodeToDelete);

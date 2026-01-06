@@ -1,16 +1,17 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include<string.h>
 struct student{
 	char name[50];
 	char address[100];
-	int marks[5];//0 for maths and 1 for physics
+	int marks[5]; /* 0 for maths and 1 for physics */
 };
 void inputVal(struct student *s){
+	int i;
 	printf("Enter name: \n");
 	scanf("%s",s->name);
 	printf("Enter address: \n");
 	scanf("%s",s->address);
-	int i;
 	for(i=0;i<5;i++){
 		printf("Enter marks for subject %d: \n",i+1);
 		scanf("%d",&s->marks[i]);
@@ -18,8 +19,8 @@ void inputVal(struct student *s){
 	
 }
 void printFailed(struct student *s,int n){
-	printf("students who failed in minimum three subject \n");
 	int i,j;
+	printf("students who failed in minimum three subject \n");
 	for(i=0;i<5;i++){
 		int fc=0;
 		for(j=0;j<5;j++){
@@ -98,15 +99,25 @@ void highest_avg(struct student *s,int n){
 }
 int main(){
 	int n;
+	struct student *students;
+	struct student *ptr;
+	int i, choice, k;
+	
 	printf("Enter number of students ");
 	scanf("%d",&n);
-	struct student students[n];
-	struct student *ptr=students;
-	for(int i=0;i<n;i++){
+	
+	students = (struct student*)malloc(n * sizeof(struct student));
+	if(students == NULL) {
+		printf("Memory Error\n");
+		return 1;
+	}
+	
+	ptr = students;
+	for(i=0;i<n;i++){
 		inputVal(ptr+i);
 		
 	}
-	int choice,k;
+
 	for(k=0;k<100;k++){
 		printf("\n Menu \n");
 		printf("1.Find the name of students who have passed and failed in minimum of 3 sujects\n");
@@ -116,7 +127,7 @@ int main(){
 		printf("5.Print the record of student with name  and total \n");
 		printf("0.Exit\n");
 		printf("Enter choice\n");
-		int choice;
+		
 		scanf("%d",&choice);
 		switch(choice){
 		case 1:
@@ -134,13 +145,15 @@ int main(){
 			break;
 		case 5:
 			printf("Records of students with total marks: \n");
-			int i,j;
-			for(i=0;i<n;i++){
-				int total=0;
-				for(j=0;j<n;j++){
-					total+=students[i].marks[j];
+			{
+				int i,j;
+				for(i=0;i<n;i++){
+					int total=0;
+					for(j=0;j<n;j++){
+						total+=students[i].marks[j];
+					}
+					printf("Name %s,Total Marks : %d \n",students[i].name,total);
 				}
-				printf("Name %s,Total Marks : %d \n",students[i].name,total);
 			}	
 			break;
 		case 0:		
@@ -153,6 +166,7 @@ int main(){
 			if(choice==0) break;
 			
 	}
+	free(students);
 	return 0;
 }
 

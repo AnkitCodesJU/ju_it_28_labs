@@ -15,8 +15,9 @@ void dequeue() {
 }
 
 void display() {
+    int i;
     if (front == -1 || front > rear) { printf("Empty\n"); return; }
-    printf("Queue: ");int i;
+    printf("Queue: ");
     for (i = front; i <= rear; i++) printf("%d ", queue[i]);
     printf("\n");
 }

@@ -11,6 +11,9 @@ struct Node *head = NULL;
 
 void insertNode(int data, int position) {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *temp;
+    int k = 1;
+    
     if (!newNode) {
         printf("Memory allocation failed!\n");
         return;
@@ -27,8 +30,7 @@ void insertNode(int data, int position) {
         printf("Node inserted successfully at the beginning.\n");
         return;
     }
-    struct Node *temp = head;
-    int k = 1;
+    temp = head;
     while (k < position - 1 && temp != NULL) {
         temp = temp->next;
         k++;
@@ -48,11 +50,14 @@ void insertNode(int data, int position) {
 }
 
 void deleteNode(int position) {
+    struct Node *nodeToDelete;
+    int k = 1;
+
     if (head == NULL) {
         printf("The list is empty. Nothing to delete.\n");
         return;
     }
-    struct Node *nodeToDelete = head;
+    nodeToDelete = head;
     if (position == 1) {
         head = head->next;
         if (head != NULL) {
@@ -62,7 +67,7 @@ void deleteNode(int position) {
         free(nodeToDelete);
         return;
     }
-    int k = 1;
+    
     while (k < position && nodeToDelete != NULL) {
         nodeToDelete = nodeToDelete->next;
         k++;
@@ -90,16 +95,19 @@ int countNodes() {
 }
 
 void reversePrint() {
+    struct Node *tail;
+    struct Node *temp;
+    
     if (head == NULL) {
         printf("The list is empty. Nothing to print.\n");
         return;
     }
-    struct Node *tail = head;
+    tail = head;
     while (tail->next != NULL) {
         tail = tail->next;
     }
     printf("The list in reverse order is: ");
-    struct Node *temp = tail;
+    temp = tail;
     while (temp != NULL) {
         printf("%d -> ", temp->data);
         temp = temp->prev;
@@ -108,12 +116,14 @@ void reversePrint() {
 }
 
 void reverseList() {
+    struct Node *temp = NULL;
+    struct Node *current = head;
+    
     if (head == NULL || head->next == NULL) {
         printf("List is empty or has only one node, no need to reverse.\n");
         return;
     }
-    struct Node *temp = NULL;
-    struct Node *current = head;
+
     while (current != NULL) {
         temp = current->prev;
         current->prev = current->next;
@@ -127,11 +137,12 @@ void reverseList() {
 }
 
 void displayList() {
+    struct Node *temp;
     if (head == NULL) {
         printf("The list is empty.\n");
         return;
     }
-    struct Node *temp = head;
+    temp = head;
     printf("The linked list is: HEAD -> ");
     while (temp != NULL) {
         printf("%d -> ", temp->data);

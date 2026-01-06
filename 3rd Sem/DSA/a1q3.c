@@ -12,17 +12,19 @@ typedef struct {
 
 
 void readPoly(Poly *p) {
+    int i;
     printf("Enter number of terms: ");
     scanf("%d", &p->n);
     printf("Enter terms (coeff exponent) in descending order of exponents:\n");
-    for (int i = 0; i < p->n; i++) {
+    for (i = 0; i < p->n; i++) {
         scanf("%d %d", &p->terms[i].coeff, &p->terms[i].exp);
     }
 }
 
 
 void printPoly(const Poly *p) {
-    for (int i = 0; i < p->n; i++) {
+    int i;
+    for (i = 0; i < p->n; i++) {
         printf("%dx^%d", p->terms[i].coeff, p->terms[i].exp);
         if (i != p->n - 1) printf(" + ");
     }
@@ -32,12 +34,13 @@ void printPoly(const Poly *p) {
 
 Poly addPoly(const Poly *p1, const Poly *p2) {
     Poly result;
-    result.n = 0;
     int i = 0, j = 0;
+    int sumCoeff;
+    result.n = 0;
 
     while (i < p1->n && j < p2->n) {
         if (p1->terms[i].exp == p2->terms[j].exp) {
-            int sumCoeff = p1->terms[i].coeff + p2->terms[j].coeff;
+            sumCoeff = p1->terms[i].coeff + p2->terms[j].coeff;
             if (sumCoeff != 0) {
                 result.terms[result.n].coeff = sumCoeff;
                 result.terms[result.n].exp = p1->terms[i].exp;

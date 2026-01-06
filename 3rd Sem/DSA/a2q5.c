@@ -18,21 +18,21 @@ int precedence(char c) {
 
 int main() {
     char infix[100];
+    int i;
     printf("Enter infix expression: ");
     scanf("%s", infix);
 
     printf("Postfix: ");
-    int i;
     for (i = 0; infix[i]; i++) {
         char c = infix[i];
         if (isalnum(c)) {
-            printf("%c", c); // operand
+            printf("%c", c); /* operand */
         } else if (c == '(') {
             push(c);
         } else if (c == ')') {
             while (!isEmpty() && peek() != '(') printf("%c", pop());
-            pop(); // remove '('
-        } else { // operator
+            pop(); /* remove '(' */
+        } else { /* operator */
             while (!isEmpty() && precedence(peek()) >= precedence(c))
                 printf("%c", pop());
             push(c);

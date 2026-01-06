@@ -12,15 +12,17 @@ typedef struct {
 
 poly multiply(poly p1, poly p2) {
     poly result;
+    int i, j, k;
+    int coeff, exp, found;
     result.n = 0;
 
-    for (int i = 0; i < p1.n; i++) {
-        for (int j = 0; j < p2.n; j++) {
-            int coeff = p1.terms[i].coeff * p2.terms[j].coeff;
-            int exp   = p1.terms[i].exp   + p2.terms[j].exp;
+    for (i = 0; i < p1.n; i++) {
+        for (j = 0; j < p2.n; j++) {
+            coeff = p1.terms[i].coeff * p2.terms[j].coeff;
+            exp   = p1.terms[i].exp   + p2.terms[j].exp;
 
-            int found = 0;
-            for (int k = 0; k < result.n; k++) {
+            found = 0;
+            for (k = 0; k < result.n; k++) {
                 if (result.terms[k].exp == exp) {
                     result.terms[k].coeff += coeff;
                     found = 1;
@@ -39,7 +41,8 @@ poly multiply(poly p1, poly p2) {
 }
 
 void display(poly p) {
-    for (int i = 0; i < p.n; i++) {
+    int i;
+    for (i = 0; i < p.n; i++) {
         printf("%dx^%d", p.terms[i].coeff, p.terms[i].exp);
         if (i != p.n - 1)
             printf(" + ");
@@ -49,17 +52,18 @@ void display(poly p) {
 
 int main() {
     poly p1, p2, prod;
+    int i;
 
     printf("enter number of terms in first polynomial: ");
     scanf("%d", &p1.n);
     printf("enter terms as: coeff exp\n");
-    for (int i = 0; i < p1.n; i++)
+    for (i = 0; i < p1.n; i++)
         scanf("%d %d", &p1.terms[i].coeff, &p1.terms[i].exp);
 
     printf("enter number of terms in second polynomial: ");
     scanf("%d", &p2.n);
     printf("enter terms as: coeff exp\n");
-    for (int i = 0; i < p2.n; i++)
+    for (i = 0; i < p2.n; i++)
         scanf("%d %d", &p2.terms[i].coeff, &p2.terms[i].exp);
 
     prod = multiply(p1, p2);

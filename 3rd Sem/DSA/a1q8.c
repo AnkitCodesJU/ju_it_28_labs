@@ -11,13 +11,14 @@ typedef struct {
 } sparse;
 
 void reads(sparse *s) {
+    int i;
     printf("enter rows cols non-zeros: ");
     scanf("%d%d%d", &s->rows, &s->cols, &s->n);
     s->data = malloc(s->n * sizeof(term));
     if (!s->data) { printf("memory error\n"); exit(1); }
 
     printf("enter row col val (1-based):\n");
-    for (int i = 0; i < s->n; i++) {
+    for (i = 0; i < s->n; i++) {
         int r, c, v;
         scanf("%d%d%d", &r, &c, &v);
         if (r > 0 && r <= s->rows && c > 0 && c <= s->cols) {
@@ -32,14 +33,15 @@ void reads(sparse *s) {
 }
 
 void count(sparse s) {
+    int i;
     int *cnt = calloc(s.rows, sizeof(int));
     if (!cnt) { printf("memory error\n"); return; }
 
-    for (int i = 0; i < s.n; i++)
+    for (i = 0; i < s.n; i++)
         cnt[s.data[i].r]++;
 
     printf("\nnon-zeros per row:\n");
-    for (int i = 0; i < s.rows; i++)
+    for (i = 0; i < s.rows; i++)
         printf("row %d: %d\n", i + 1, cnt[i]);
 
     free(cnt);

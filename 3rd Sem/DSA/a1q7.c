@@ -13,27 +13,30 @@ typedef struct {
 } sparse;
 
 void reads(sparse *s) {
+    int i;
     printf("enter rows, cols, non-zero elements: ");
     scanf("%d%d%d", &s->m, &s->n, &s->num);
 
     printf("enter row, col, val for each non-zero element:\n");
-    for (int i = 0; i < s->num; i++) {
+    for (i = 0; i < s->num; i++) {
         scanf("%d%d%d", &s->data[i].row, &s->data[i].col, &s->data[i].val);
     }
 }
 
 void prints(sparse *s) {
+    int i;
     printf("\nrow col val\n");
-    for (int i = 0; i < s->num; i++) {
+    for (i = 0; i < s->num; i++) {
         printf("%d   %d   %d\n", s->data[i].row, s->data[i].col, s->data[i].val);
     }
 }
 
 void printfull(sparse *s) {
-    printf("\nfull matrix form:\n");
     int k = 0;
-    for (int i = 0; i < s->m; i++) {
-        for (int j = 0; j < s->n; j++) {
+    int i, j;
+    printf("\nfull matrix form:\n");
+    for (i = 0; i < s->m; i++) {
+        for (j = 0; j < s->n; j++) {
             if (k < s->num && s->data[k].row == i && s->data[k].col == j) {
                 printf("%d ", s->data[k].val);
                 k++;
@@ -46,17 +49,18 @@ void printfull(sparse *s) {
 }
 
 void add(sparse *a, sparse *b) {
+    sparse c;
+    int i = 0, j = 0;
+    
     if (a->m != b->m || a->n != b->n) {
         printf("\ncannot add matrices of different dimensions\n");
         return;
     }
 
-    sparse c;
     c.m = a->m;
     c.n = a->n;
     c.num = 0;
 
-    int i = 0, j = 0;
     while (i < a->num && j < b->num) {
         if (a->data[i].row < b->data[j].row ||
            (a->data[i].row == b->data[j].row && a->data[i].col < b->data[j].col)) {

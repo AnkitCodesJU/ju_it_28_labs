@@ -40,18 +40,21 @@ void insertNode(int data, int position) {
 }
 
 void deleteNode(int position) {
+    struct Node *temp, *nodeToDelete;
+    int k;
+
     if (head == NULL) {
         printf("The list is empty. Nothing to delete.\n");
         return;
     }
-    struct Node *temp = head, *nodeToDelete;
+    temp = head;
     if (position == 1) {
         head = head->next;
         printf("Node at position 1 with data %d deleted.\n", temp->data);
         free(temp);
         return;
     }
-    int k = 1;
+    k = 1;
     while (temp != NULL && k < position - 1) {
         temp = temp->next;
         k++;
@@ -85,13 +88,14 @@ void reversePrint(struct Node *current) {
 }
 
 void reverseList() {
+    struct Node *prevNode = NULL;
+    struct Node *currentNode = head;
+    struct Node *nextNode = NULL;
+
     if (head == NULL || head->next == NULL) {
         printf("List is empty or has only one node, no need to reverse.\n");
         return;
     }
-    struct Node *prevNode = NULL;
-    struct Node *currentNode = head;
-    struct Node *nextNode = NULL;
     while (currentNode != NULL) {
         nextNode = currentNode->next;
         currentNode->next = prevNode;
@@ -103,11 +107,12 @@ void reverseList() {
 }
 
 void displayList() {
+    struct Node *temp;
     if (head == NULL) {
         printf("The list is empty.\n");
         return;
     }
-    struct Node *temp = head;
+    temp = head;
     printf("The linked list is: HEAD -> ");
     while (temp != NULL) {
         printf("%d -> ", temp->data);

@@ -58,7 +58,8 @@ double calculateInterest(SavingsAccount *acc) {
 
 double applyInterest(SavingsAccount accounts[], int n) {
     double total = 0.0;
-    for (int i = 0; i < n; i++) {
+    int i;
+    for (i = 0; i < n; i++) {
         total += calculateInterest(&accounts[i]);
     }
     return total;
@@ -66,8 +67,9 @@ double applyInterest(SavingsAccount accounts[], int n) {
 
 
 void displayAccounts(SavingsAccount accounts[], int n) {
+    int i;
     printf("\n--- Account Details ---\n");
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         printf("Acc.No: %d | Name: %s | Balance: Rs.%.2f\n",
                accounts[i].accountNumber, accounts[i].name, accounts[i].balance);
     }
@@ -77,9 +79,10 @@ void displayAccounts(SavingsAccount accounts[], int n) {
 
 void handleDeposit(SavingsAccount accounts[], int n) {
     int accNo; double amt;
+    int i;
     printf("Enter account number and amount to deposit: ");
     scanf("%d %lf", &accNo, &amt);
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         if (accounts[i].accountNumber == accNo) {
             deposit(&accounts[i], amt);
             return;
@@ -90,9 +93,10 @@ void handleDeposit(SavingsAccount accounts[], int n) {
 
 void handleWithdraw(SavingsAccount accounts[], int n) {
     int accNo; double amt;
+    int i;
     printf("Enter account number and amount to withdraw: ");
     scanf("%d %lf", &accNo, &amt);
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         if (accounts[i].accountNumber == accNo) {
             withdraw(&accounts[i], amt);
             return;
@@ -100,6 +104,9 @@ void handleWithdraw(SavingsAccount accounts[], int n) {
     }
     printf("Account not found!\n");
 }
+
+/* ... (Handle other helper functions similarly if they had loops, 
+ * but handleDisplay etc call displayAccounts which is fixed) */
 
 void handleDisplay(SavingsAccount accounts[], int n) {
     displayAccounts(accounts, n);
@@ -111,10 +118,11 @@ void handleApplyInterest(SavingsAccount accounts[], int n) {
 }
 
 void handleChangeRate(SavingsAccount accounts[], int n) {
+    double total;
     printf("Enter new interest rate (e.g. 0.06 for 6%%): ");
     scanf("%lf", &interestRate);
     printf("Interest rate updated to %.2f%%\n", interestRate * 100);
-    double total = applyInterest(accounts, n);
+    total = applyInterest(accounts, n);
     printf("Recalculated and deposited new interest: Rs. %.2f\n", total);
 }
 
@@ -125,30 +133,36 @@ void displayAccount(const SavingsAccount *acc) {
 
 
 int main() {
+    int n, i;
+    SavingsAccount *accounts;
+    int choice;
+    
     srand(time(NULL));
 
-    int n;
     printf("Enter number of accounts to create: ");
     if (scanf("%d", &n) != 1 || n <= 0) {
         printf("Invalid number of accounts!\n");
         return 1;
     }
 
-    SavingsAccount accounts[n];
+    accounts = (SavingsAccount*)malloc(n * sizeof(SavingsAccount));
+    if (!accounts) {
+        printf("Memory error\n");
+        return 1;
+    }
 
-    for (int i = 0; i < n; i++) {
-    int balance = (rand() % (100000 - 1000 + 1)) + 1000;
-    printf("Enter name for User_%d: ", i + 1);
-    char name[50];
-    scanf("%s", name);
-    createAccount(&accounts[i], name, balance);
+    for (i = 0; i < n; i++) {
+        int balance = (rand() % (100000 - 1000 + 1)) + 1000;
+        char name[50];
+        printf("Enter name for User_%d: ", i + 1);
+        scanf("%s", name);
+        createAccount(&accounts[i], name, balance);
 
-    printf("Account created successfully:\n");
-    displayAccount(&accounts[i]);
-    printf("\n");
-}
+        printf("Account created successfully:\n");
+        displayAccount(&accounts[i]);
+        printf("\n");
+    }
 
-    int choice;
     do {
         printf("\n====== Bank Menu ======\n");
         printf("1. Deposit\n");
@@ -174,5 +188,6 @@ int main() {
         }
     } while (choice != 6);
 
+    free(accounts);
     return 0;
 }

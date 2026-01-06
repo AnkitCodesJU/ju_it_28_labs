@@ -20,11 +20,11 @@ struct Node* createNode(int data) {
 }
 
 struct Node* createTree(struct Node* root, int data) {
+    int choice;
     if (root == NULL) {
         return createNode(data);
     }
 
-    int choice;
     printf("Insert to the left or right of %d? (1 = left, 2 = right): ", root->data);
     scanf("%d", &choice);
 
