@@ -99,12 +99,12 @@ class Library {
         public static void main(String[] args) {
                 Library library = new Library(5);
 
-                library.addPublication(new Book("Java Basics", "James Gosling", 350, 450, "Sun Microsystems"));
-                library.addPublication(new Book("OOP Concepts", "Herbert Schildt", 500, 650, "McGraw-Hill"));
-                library.addPublication(new Book("Data Structures", "Mark Allen", 400, 550, "Pearson"));
+                library.addPublication(new Book("Book1", "Mr.A", 350, 450, "XYZ"));
+                library.addPublication(new Book("Book2", "Mr.X", 500, 650, "ABC"));
+                library.addPublication(new Book("Song of Ice n Fire", "GRRM", 400, 550, "ABC"));
 
                 library.addPublication(new Journal(101, 120, 200, "IEEE"));
-                library.addPublication(new Journal(202, 150, 250, "Springer"));
+                library.addPublication(new Journal(202, 150, 250, "ACM"));
 
                 library.printAllPublications();
         }
